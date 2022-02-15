@@ -9,6 +9,8 @@ from matplotlib.figure import Figure
 
 rcParams['font.size'] = 9
 import matplotlib.pyplot as plt
+from config import PLANETS, WIDTH
+from planets import Planet
 
 
 class MatplotlibWidget(Canvas, FuncAnimation):
@@ -18,11 +20,20 @@ class MatplotlibWidget(Canvas, FuncAnimation):
         self.figure = Figure()
         self.axes = self.figure.add_subplot()  # type:plt.Axes
 
-        self.lin, = self.axes.plot([], [])  # type: plt.Line2D
-        self.all_x = []
-        self.all_y = []
-        self.axes.set_xlim(0, 10)
-        self.axes.set_ylim(-1.5, 1.5)
+        # Plot Settings
+        self.line, = self.axes.plot([], [], 'ro')  # type: plt.Line2D
+        self.axes.set_xlim(-WIDTH, WIDTH)
+        self.axes.set_ylim(-WIDTH, WIDTH)
+
+        # Planets
+        self.all_planets = list()
+        self.all_lines = list() # List with trails for each planet and their former coordinates
+        for planet in PLANETS.values():
+            self.all_planets.append(Planet(*planet))
+            line, = self.axes.plot([], [])
+            self.all_lines.append((line, [], []))
+
+        # Variable to check if animation is running
         self.running = False
 
         super(MatplotlibWidget, self).__init__(self.figure)
@@ -33,22 +44,36 @@ class MatplotlibWidget(Canvas, FuncAnimation):
         ani = FuncAnimation.__init__(self, self.figure, self.update_ani, interval=10, blit=True)
 
 
-
     def update_ani(self, frames):
         if not self.running:
-            self.event_source.stop()
-        i = frames / 100
-        self.all_x.append(i)
-        self.all_y.append(math.sin(i))
-        self.lin.set_data(self.all_x, self.all_y)
-        return self.lin,
+            self.stop_animation()
+            return [self.line] + [line[0] for line in self.all_lines]
+        all_x_pos = list()
+        all_y_pos = list()
+        for index, planet in enumerate(self.all_planets):
+            planet.update_pos(self.all_planets)
+            planet_x_pos = planet.pos[0]
+            planet_y_pos = planet.pos[1]
+
+            all_x_pos.append(planet_x_pos)
+            all_y_pos.append(planet_y_pos)
+
+            # Updat trail
+            line_lst = self.all_lines[index]
+            line_lst[1].append(planet_x_pos)
+            line_lst[2].append(planet_y_pos)
+            line_lst[0].set_data(line_lst[1], line_lst[2])
+
+        self.line.set_data(all_x_pos, all_y_pos)
+        return [self.line] + [line[0] for line in self.all_lines]
 
     def stop_animation(self):
         self.running = False
+        self.pause()
 
     def start_animation(self):
-        self.event_source.start()
         self.running = True
+        self.resume()
 
     def sizeHint(self):
         return QSize(*self.get_width_height())

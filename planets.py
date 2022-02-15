@@ -8,18 +8,17 @@ import numpy as np
 
 from config import TIME, GRAV_CONST
 
-
 class Planet:
     def __init__(self, mass, pos: list, vel: list):
         self.mass = mass
         self.pos = np.array(pos, dtype=np.float64)
         self.vel = np.array(vel, dtype=np.float64)
 
-    def update_pos(self):
+    def update_pos(self, all_planets):
         self.pos += self.vel * TIME
-        self.vel += self.calc_acceleration() * TIME
+        self.vel += self.calc_acceleration(all_planets) * TIME
 
-    def calc_acceleration(self):
+    def calc_acceleration(self, all_planets):
         total_force = np.array([0, 0], dtype=np.float64)
         for other_planet in all_planets:
             if other_planet != self:
