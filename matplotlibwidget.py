@@ -1,5 +1,3 @@
-import math
-
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QSizePolicy
 from matplotlib import rcParams
@@ -27,7 +25,7 @@ class MatplotlibWidget(Canvas, FuncAnimation):
 
         # Planets
         self.all_planets = list()
-        self.all_lines = list() # List with trails for each planet and their former coordinates
+        self.all_lines = list()  # List with trails for each planet and their former coordinates
         for planet in PLANETS.values():
             self.all_planets.append(Planet(*planet))
             line, = self.axes.plot([], [])
@@ -42,7 +40,6 @@ class MatplotlibWidget(Canvas, FuncAnimation):
             QSizePolicy.Expanding, QSizePolicy.Expanding)
         super(MatplotlibWidget, self).updateGeometry()
         ani = FuncAnimation.__init__(self, self.figure, self.update_ani, interval=10, blit=True)
-
 
     def update_ani(self, frames):
         if not self.running:

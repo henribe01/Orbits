@@ -2,23 +2,25 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
-from matplotlibwidget import MatplotlibWidget
-from uis.python_files.test import Ui_MainWindow
+from uis.python_files.mainwindow import Ui_MainWindow
+from widgets import MatplotAnimationWidget, MatplotOptionsWidget
 
 
 class MyApp(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MyApp, self).__init__()
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.start)
-        self.pushButton_2.clicked.connect(self.stop)
-        self.mplWidget = self.findChild(MatplotlibWidget)
+        self.AnimationWidget = MatplotAnimationWidget(self)
+        self.OptionWidget = MatplotOptionsWidget(self)
+        self.stackedWidget.addWidget(self.AnimationWidget)
+        self.stackedWidget.addWidget(self.OptionWidget)
+        self.showAnimationWidget()
 
-    def start(self):
-        self.mplWidget.start_animation()
+    def showAnimationWidget(self):
+        self.stackedWidget.setCurrentWidget(self.AnimationWidget)
 
-    def stop(self):
-        self.mplWidget.stop_animation()
+    def showOptionsWidget(self):
+        self.stackedWidget.setCurrentWidget(self.OptionWidget)
 
 
 def except_hook(cls, exception, traceback):
