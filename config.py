@@ -8,3 +8,13 @@ HEIGHT = 10 ** 25
 
 PLANETS = {'Earth': [5.972 * 10 ** 24, [0, 0], [0, 0]], 'Moon': [7.347 * 10 ** 22, [0, 384400000], [1022, 0]],
            'Mars': [8.753 * 10 ** 20, [300000000, 0], [0, 1000]]}
+
+all_planets = []
+
+
+def init_planets():
+    from planets import Planet
+    global all_planets
+
+    for planet in PLANETS.values():
+        all_planets.append(Planet(*planet))

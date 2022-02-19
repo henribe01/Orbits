@@ -6,7 +6,7 @@ matplotlib.use("TkAgg")
 
 import numpy as np
 
-from config import TIME, GRAV_CONST
+from config import TIME, GRAV_CONST, all_planets
 
 class Planet:
     def __init__(self, mass, pos: list, vel: list):
@@ -14,11 +14,11 @@ class Planet:
         self.pos = np.array(pos, dtype=np.float64)
         self.vel = np.array(vel, dtype=np.float64)
 
-    def update_pos(self, all_planets):
+    def update_pos(self):
         self.pos += self.vel * TIME
-        self.vel += self.calc_acceleration(all_planets) * TIME
+        self.vel += self.calc_acceleration() * TIME
 
-    def calc_acceleration(self, all_planets):
+    def calc_acceleration(self):
         total_force = np.array([0, 0], dtype=np.float64)
         for other_planet in all_planets:
             if other_planet != self:

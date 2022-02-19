@@ -2,6 +2,7 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
+import config
 from uis.python_files.mainwindow import Ui_MainWindow
 from widgets import MatplotAnimationWidget, MatplotOptionsWidget
 
@@ -17,9 +18,11 @@ class MyApp(QMainWindow, Ui_MainWindow):
         self.showAnimationWidget()
 
     def showAnimationWidget(self):
+        """Changes StackedWidget to show the Animation Widget"""
         self.stackedWidget.setCurrentWidget(self.AnimationWidget)
 
     def showOptionsWidget(self):
+        """Changes StackedWidget to show the Option Widget"""
         self.stackedWidget.setCurrentWidget(self.OptionWidget)
 
 
@@ -28,6 +31,7 @@ def except_hook(cls, exception, traceback):
 
 
 if __name__ == '__main__':
+    config.init_planets()
     app = QApplication(sys.argv)
     sys.excepthook = except_hook
     window = MyApp()
