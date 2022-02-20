@@ -1,2 +1,0 @@
-#TODO: Cleanup MatplotlibWidget
-#TODO: Change way to calc velocity to be more accurate
