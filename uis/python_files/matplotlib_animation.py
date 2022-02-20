@@ -17,7 +17,7 @@ class Ui_matplotlib_animation(object):
         matplotlib_animation.resize(836, 417)
         self.verticalLayout = QtWidgets.QVBoxLayout(matplotlib_animation)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.canvas_widget = MatplotlibWidget(matplotlib_animation)
+        self.canvas_widget = AnimationCanvasWidget(matplotlib_animation)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,4 +53,4 @@ class Ui_matplotlib_animation(object):
         self.stop_pushButton.setText(_translate("matplotlib_animation", "Stop"))
         self.reset_pushButton.setText(_translate("matplotlib_animation", "Reset"))
         self.option_pushButton.setText(_translate("matplotlib_animation", "Optionen"))
-from matplotlibwidget import MatplotlibWidget
+from canvaswidget import AnimationCanvasWidget

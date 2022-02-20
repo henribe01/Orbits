@@ -20,7 +20,7 @@ class Planet:
 
     def calc_acceleration(self):
         total_force = np.array([0, 0], dtype=np.float64)
-        for other_planet in all_planets:
+        for other_planet in all_planets.values():
             if other_planet != self:
                 vector_planets = self.pos - other_planet.pos
                 norm_vector = np.linalg.norm(self.pos - other_planet.pos)
