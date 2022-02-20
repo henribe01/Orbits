@@ -18,15 +18,15 @@ class MatplotlibWidget(Canvas, FuncAnimation):
         self.axes = self.figure.add_subplot()  # type:plt.Axes
 
         # Plot Settings
-        self.line, = self.axes.plot([], [], 'ro')  # type: plt.Line2D
         self.axes.set_xlim(-WIDTH, WIDTH)
         self.axes.set_ylim(-WIDTH, WIDTH)
 
         # Planets
         self.all_lines = list()  # List with trails for each planet and their former coordinates
-        for _ in all_planets:
-            line, = self.axes.plot([], [])
-            self.all_lines.append((line, [], []))
+        for planet in all_planets:
+            line, = self.axes.plot(*planet.pos, 'ro', zorder=10)  # type: plt.Line2D
+            trail_line, = self.axes.plot([], [], zorder=1)
+            self.all_lines.append((line, trail_line, [], []))
 
         # Variable to check if animation is running
         self.running = False
@@ -41,25 +41,20 @@ class MatplotlibWidget(Canvas, FuncAnimation):
     def update_ani(self, frames):
         if not self.running:
             self.stop_animation()
-            return [self.line] + [line[0] for line in self.all_lines]
-        all_x_pos = list()
-        all_y_pos = list()
+            return [line for lines in self.all_lines for line in lines[:2]]
         for index, planet in enumerate(all_planets):
             planet.update_pos()
             planet_x_pos = planet.pos[0]
             planet_y_pos = planet.pos[1]
 
-            all_x_pos.append(planet_x_pos)
-            all_y_pos.append(planet_y_pos)
-
-            # Updat trail
+            # Update trail
             line_lst = self.all_lines[index]
-            line_lst[1].append(planet_x_pos)
-            line_lst[2].append(planet_y_pos)
-            line_lst[0].set_data(line_lst[1], line_lst[2])
+            line_lst[2].append(planet_x_pos)
+            line_lst[3].append(planet_y_pos)
+            line_lst[1].set_data(line_lst[2], line_lst[3])
+            line_lst[0].set_data(planet_x_pos, planet_y_pos)
 
-        self.line.set_data(all_x_pos, all_y_pos)
-        return [self.line] + [line[0] for line in self.all_lines]
+        return [line for lines in self.all_lines for line in lines[:2]]
 
     def stop_animation(self):
         self.running = False
