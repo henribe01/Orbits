@@ -8,6 +8,7 @@ import numpy as np
 
 from config import TIME, GRAV_CONST, all_planets
 
+
 class Planet:
     def __init__(self, mass, pos: list, vel: list):
         self.mass = mass
@@ -25,7 +26,8 @@ class Planet:
                 vector_planets = self.pos - other_planet.pos
                 norm_vector = np.linalg.norm(self.pos - other_planet.pos)
 
-                force = -(GRAV_CONST * self.mass * other_planet.mass) / norm_vector ** 2
+                force = -(
+                            GRAV_CONST * self.mass * other_planet.mass) / norm_vector ** 2
                 direction_vector = vector_planets / norm_vector
                 total_force += force * direction_vector
         return total_force / self.mass

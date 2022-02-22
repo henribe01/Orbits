@@ -14,10 +14,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_matplot_options(object):
     def setupUi(self, matplot_options):
         matplot_options.setObjectName("matplot_options")
-        matplot_options.resize(828, 446)
+        matplot_options.resize(1000, 500)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(matplot_options)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.canvas_widget = QtWidgets.QWidget(matplot_options)
+        self.canvas_widget = OptionCanvasWidget(matplot_options)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -105,13 +105,9 @@ class Ui_matplot_options(object):
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem5)
         self.save_pushButton = QtWidgets.QPushButton(matplot_options)
-        self.save_pushButton.setMinimumSize(QtCore.QSize(100, 0))
-        self.save_pushButton.setMaximumSize(QtCore.QSize(100, 16777215))
         self.save_pushButton.setObjectName("save_pushButton")
         self.horizontalLayout.addWidget(self.save_pushButton)
         self.reset_pushButton = QtWidgets.QPushButton(matplot_options)
-        self.reset_pushButton.setMinimumSize(QtCore.QSize(100, 0))
-        self.reset_pushButton.setMaximumSize(QtCore.QSize(100, 16777215))
         self.reset_pushButton.setObjectName("reset_pushButton")
         self.horizontalLayout.addWidget(self.reset_pushButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -128,3 +124,4 @@ class Ui_matplot_options(object):
         self.vely_label.setText(_translate("matplot_options", "<html><head/><body><p>Geschwindigkeit <br>in y-Richtung</p></body></html>"))
         self.save_pushButton.setText(_translate("matplot_options", "Save"))
         self.reset_pushButton.setText(_translate("matplot_options", "Reset"))
+from canvaswidget import OptionCanvasWidget

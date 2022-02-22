@@ -19,6 +19,7 @@ class MyApp(QMainWindow, Ui_MainWindow):
 
     def showAnimationWidget(self):
         """Changes StackedWidget to show the Animation Widget"""
+        self.AnimationWidget.reset()
         self.stackedWidget.setCurrentWidget(self.AnimationWidget)
 
     def showOptionsWidget(self):
