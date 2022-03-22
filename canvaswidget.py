@@ -1,4 +1,3 @@
-import copy
 from typing import Iterable
 
 import matplotlib.pyplot as plt
@@ -9,11 +8,11 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure
 
-import config
 from Draggable import DraggableRectangle
-from config import WIDTH, all_planets, reset_planets
+from config import WIDTH, reset_planets, all_planets
 
 rcParams['font.size'] = 9
+
 
 class CanvasWidget(Canvas, QWidget):
     def __init__(self, parent: QWidget = None) -> None:
@@ -90,7 +89,6 @@ class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
         self.resume()
 
     def reset(self):
-        global all_planets
         self.clear()
         reset_planets()
         self.init_lines()
@@ -100,9 +98,17 @@ class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
 class OptionCanvasWidget(CanvasWidget):
     def __init__(self, parent: object = None) -> None:
         super(OptionCanvasWidget, self).__init__()
+        self.selected_index = 0
+
+        # Create draggable lines for all planets
         self.all_draggable_planets = list()
         for name, line in self.all_lines.items():
             planet_line = line[0]
             dr = DraggableRectangle(planet_line, name)
             dr.connect()
             self.all_draggable_planets.append(dr)
+
+    def set_selected(self, line):
+        self.selected_index = [lines[0] for lines in
+                               self.all_lines.values()].index(line)
+        self.parentWidget().select(list(all_planets.values())[self.selected_index])

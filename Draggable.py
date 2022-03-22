@@ -24,6 +24,7 @@ class DraggableRectangle:
         if not contains:
             return
         self.press = *self.line.get_xydata(), (event.xdata, event.ydata)
+        self.line.figure.canvas.set_selected(self.line)
 
     def on_motion(self, event):
         """Move the rectangle if the mouse is over us."""

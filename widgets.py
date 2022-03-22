@@ -1,6 +1,7 @@
 import numpy as np
 from PyQt5.QtWidgets import QWidget
 
+import planets
 from config import all_planets, save_planets
 from uis.python_files.matplotlib_animation import Ui_matplotlib_animation
 from uis.python_files.matplotlib_options import Ui_matplot_options
@@ -46,3 +47,7 @@ class MatplotOptionsWidget(QWidget, Ui_matplot_options):
             all_planets[name].pos = np.array(*line[0].get_xydata())
         save_planets()
         self.parent.showAnimationWidget()
+
+    def select(self, Planet: planets.Planet):
+        self.velx_lineEdit.setText(str(Planet.vel[0]))
+        self.vely_lineEdit.setText(str(Planet.vel[1]))

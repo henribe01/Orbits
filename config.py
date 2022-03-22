@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 GRAV_CONST = 6.674 * 10 ** -11
 INTERVALL = 10
 SPEED_UP = 1000000
@@ -25,7 +27,6 @@ def reset_planets():
     for planet in all_planets.values():
         del planet
     init_planets()
-    print([planet.pos for planet in all_planets.values()])
     return all_planets
 
 
