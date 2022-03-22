@@ -1,3 +1,4 @@
+import copy
 from typing import Iterable
 
 import matplotlib.pyplot as plt
@@ -8,11 +9,11 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure
 
+import config
 from Draggable import DraggableRectangle
-from config import WIDTH, all_planets
+from config import WIDTH, all_planets, reset_planets
 
 rcParams['font.size'] = 9
-
 
 class CanvasWidget(Canvas, QWidget):
     def __init__(self, parent: QWidget = None) -> None:
@@ -56,7 +57,6 @@ class CanvasWidget(Canvas, QWidget):
                                     [[], []]]
 
 
-
 class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
     def __init__(self, parent: object = None) -> None:
         super(AnimationCanvasWidget, self).__init__()
@@ -90,7 +90,9 @@ class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
         self.resume()
 
     def reset(self):
+        global all_planets
         self.clear()
+        reset_planets()
         self.init_lines()
         self.draw()
 

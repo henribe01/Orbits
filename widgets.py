@@ -1,9 +1,9 @@
 import numpy as np
 from PyQt5.QtWidgets import QWidget
 
+from config import all_planets, save_planets
 from uis.python_files.matplotlib_animation import Ui_matplotlib_animation
 from uis.python_files.matplotlib_options import Ui_matplot_options
-from config import all_planets
 
 
 class MatplotAnimationWidget(QWidget, Ui_matplotlib_animation):
@@ -43,6 +43,6 @@ class MatplotOptionsWidget(QWidget, Ui_matplot_options):
     def save(self):
         """Saves the changed Planets and shows the AnimationWidget"""
         for name, line in self.canvas_widget.all_lines.items():
-            print('save:', all_planets[name].pos)
             all_planets[name].pos = np.array(*line[0].get_xydata())
+        save_planets()
         self.parent.showAnimationWidget()
