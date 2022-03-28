@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 from PyQt5.QtWidgets import QWidget
 
@@ -49,5 +51,7 @@ class MatplotOptionsWidget(QWidget, Ui_matplot_options):
         self.parent.showAnimationWidget()
 
     def select(self, Planet: planets.Planet):
+        """Changes the Texts to the selected Planet"""
         self.velx_lineEdit.setText(str(Planet.vel[0]))
         self.vely_lineEdit.setText(str(Planet.vel[1]))
+

@@ -44,6 +44,7 @@ class DraggableRectangle:
         """Clear button press information."""
         self.press = None
         self.line.figure.canvas.draw()
+        self.line.figure.canvas.calc_path()
 
     def disconnect(self):
         """Disconnect all callbacks."""

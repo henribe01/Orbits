@@ -8,6 +8,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure
 
+import planets
 from Draggable import DraggableRectangle
 from config import WIDTH, reset_planets, all_planets
 
@@ -102,6 +103,7 @@ class OptionCanvasWidget(CanvasWidget):
 
         # Create draggable lines for all planets
         self.all_draggable_planets = list()
+        self.all_path_lines = list()
         for name, line in self.all_lines.items():
             planet_line = line[0]
             dr = DraggableRectangle(planet_line, name)
@@ -111,4 +113,32 @@ class OptionCanvasWidget(CanvasWidget):
     def set_selected(self, line):
         self.selected_index = [lines[0] for lines in
                                self.all_lines.values()].index(line)
-        self.parentWidget().select(list(all_planets.values())[self.selected_index])
+        self.parentWidget().select(
+            list(all_planets.values())[self.selected_index])
+
+    def calc_path(self):
+        """Calc the path for every planet"""
+        # Delete old path_lines
+        if len(self.all_path_lines) != 0:
+            for path_line in self.all_path_lines:
+                self.axes.lines.remove(path_line)
+            self.all_path_lines = list()
+        # Gets position of planets in canvas and creates new Planets#
+        planets_to_draw = dict()
+        for dp in self.all_draggable_planets:
+            vel = all_planets[dp.name].vel  # TODO: Replace with Widget Data
+            mass = all_planets[dp.name].mass  # TODO: Replace with Widget Data
+            planets_to_draw[dp.name] = planets.Planet(mass,
+                                                      dp.line.get_xydata()[0],
+                                                      vel)
+        data = {name: [[planet.pos[0]], [planet.pos[1]]] for name, planet in planets_to_draw.items()}
+        for _ in range(500):
+            for name, planet in planets_to_draw.items():
+                planet.update_pos(planets_to_draw)
+                data[name][0].append(planet.pos[0])
+                data[name][1].append(planet.pos[1])
+        for name, planet in planets_to_draw.items():
+            pos_data = data[name]
+            path_line, = self.axes.plot(pos_data[0], pos_data[1],
+                                       zorder=1)  # type:plt.Line2D
+            self.all_path_lines.append(path_line)

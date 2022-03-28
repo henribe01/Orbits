@@ -15,13 +15,13 @@ class Planet:
         self.pos = np.array(pos, dtype=np.float64)
         self.vel = np.array(vel, dtype=np.float64)
 
-    def update_pos(self):
+    def update_pos(self, planet_dict=all_planets):
         self.pos += self.vel * TIME
-        self.vel += self.calc_acceleration() * TIME
+        self.vel += self.calc_acceleration(planet_dict) * TIME
 
-    def calc_acceleration(self):
+    def calc_acceleration(self, planet_dict):
         total_force = np.array([0, 0], dtype=np.float64)
-        for other_planet in all_planets.values():
+        for other_planet in planet_dict.values():
             if other_planet != self:
                 vector_planets = self.pos - other_planet.pos
                 norm_vector = np.linalg.norm(self.pos - other_planet.pos)
