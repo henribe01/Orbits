@@ -17,7 +17,7 @@ class Ui_animation_widget(object):
         animation_widget.resize(836, 417)
         self.verticalLayout = QtWidgets.QVBoxLayout(animation_widget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.canvas_widget = CanvasWidget(animation_widget)
+        self.canvas_widget = AnimationCanvasWidget(animation_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,4 +53,4 @@ class Ui_animation_widget(object):
         self.stop_pushButton.setText(_translate("animation_widget", "Stop"))
         self.reset_pushButton.setText(_translate("animation_widget", "Reset"))
         self.option_pushButton.setText(_translate("animation_widget", "Optionen"))
-from canvas import CanvasWidget
+from canvas import AnimationCanvasWidget

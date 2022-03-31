@@ -1,7 +1,11 @@
+from typing import Dict, List, Tuple
+
+import matplotlib.pyplot as plt
 import numpy as np
 
 from config import TIME, GRAV_CONST
-from typing import Dict, List, Tuple
+from lines import PlanetLine
+
 
 class Planet:
     all_planets = dict()
@@ -25,18 +29,33 @@ class Planet:
                 vector_planets = self.pos - other_planet.pos
                 norm_vector = np.linalg.norm(vector_planets)
                 force = -(
-                            GRAV_CONST * self.mass * other_planet.mass) / norm_vector ** 2
+                        GRAV_CONST * self.mass * other_planet.mass) / norm_vector ** 2
                 direction_vector = vector_planets / norm_vector
                 total_force += force * direction_vector
         return total_force / self.mass
 
     @classmethod
-    def init_planets(cls, planets: Dict[str, List[float, Tuple[float, float], Tuple[float, float]]]):
+    def init_planets(cls, planets):
         """
         Creates multiple planets
-        :param planets: Takes a Dict with the Planetsname as Key and as a
+        :param planets: Takes a Dict with the Planetname as Key and as a
         Value a List consisting of mass, (pos_x, pos_y), (vel_x, vel_y)
         :return: None
         """
         for name, planet_data in planets.items():
             cls(name, *planet_data)
+
+    @classmethod
+    def get_planet(cls, name):
+        return cls.all_planets[name]
+
+    @classmethod
+    def plot_planets(cls, axes: plt.Axes, names_list: List = None):
+        """Plots the given Planets onto the given Axes"""
+        all_lines = list()
+        print(cls.all_planets)
+        for name, planet in cls.all_planets.items():
+            if names_list is None or name in names_list:
+                planet_line = PlanetLine(axes, planet)
+                all_lines.append(planet_line)
+        return all_lines
