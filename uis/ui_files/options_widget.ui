@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>matplot_options</class>
- <widget class="QWidget" name="matplot_options">
+ <class>options_widget</class>
+ <widget class="QWidget" name="options_widget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1185</width>
+    <width>1158</width>
     <height>636</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="OptionCanvasWidget" name="canvas_widget" native="true">
+    <widget class="CanvasWidget" name="canvas_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -161,6 +161,13 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="exit_pushButton">
+         <property name="text">
+          <string>Exit</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="save_pushButton">
          <property name="text">
           <string>Save</string>
@@ -182,9 +189,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>OptionCanvasWidget</class>
+   <class>CanvasWidget</class>
    <extends>QWidget</extends>
-   <header>canvaswidget</header>
+   <header>canvas</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

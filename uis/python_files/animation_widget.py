@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'matplotlib_animation.ui'
+# Form implementation generated from reading ui file 'animation_widget.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,13 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_matplotlib_animation(object):
-    def setupUi(self, matplotlib_animation):
-        matplotlib_animation.setObjectName("matplotlib_animation")
-        matplotlib_animation.resize(836, 417)
-        self.verticalLayout = QtWidgets.QVBoxLayout(matplotlib_animation)
+class Ui_animation_widget(object):
+    def setupUi(self, animation_widget):
+        animation_widget.setObjectName("animation_widget")
+        animation_widget.resize(836, 417)
+        self.verticalLayout = QtWidgets.QVBoxLayout(animation_widget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.canvas_widget = AnimationCanvasWidget(matplotlib_animation)
+        self.canvas_widget = CanvasWidget(animation_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -27,30 +27,30 @@ class Ui_matplotlib_animation(object):
         self.verticalLayout.addWidget(self.canvas_widget)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.start_pushButton = QtWidgets.QPushButton(matplotlib_animation)
+        self.start_pushButton = QtWidgets.QPushButton(animation_widget)
         self.start_pushButton.setObjectName("start_pushButton")
         self.horizontalLayout.addWidget(self.start_pushButton)
-        self.stop_pushButton = QtWidgets.QPushButton(matplotlib_animation)
+        self.stop_pushButton = QtWidgets.QPushButton(animation_widget)
         self.stop_pushButton.setObjectName("stop_pushButton")
         self.horizontalLayout.addWidget(self.stop_pushButton)
-        self.reset_pushButton = QtWidgets.QPushButton(matplotlib_animation)
+        self.reset_pushButton = QtWidgets.QPushButton(animation_widget)
         self.reset_pushButton.setObjectName("reset_pushButton")
         self.horizontalLayout.addWidget(self.reset_pushButton)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.option_pushButton = QtWidgets.QPushButton(matplotlib_animation)
+        self.option_pushButton = QtWidgets.QPushButton(animation_widget)
         self.option_pushButton.setObjectName("option_pushButton")
         self.horizontalLayout.addWidget(self.option_pushButton)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.retranslateUi(matplotlib_animation)
-        QtCore.QMetaObject.connectSlotsByName(matplotlib_animation)
+        self.retranslateUi(animation_widget)
+        QtCore.QMetaObject.connectSlotsByName(animation_widget)
 
-    def retranslateUi(self, matplotlib_animation):
+    def retranslateUi(self, animation_widget):
         _translate = QtCore.QCoreApplication.translate
-        matplotlib_animation.setWindowTitle(_translate("matplotlib_animation", "Form"))
-        self.start_pushButton.setText(_translate("matplotlib_animation", "Start"))
-        self.stop_pushButton.setText(_translate("matplotlib_animation", "Stop"))
-        self.reset_pushButton.setText(_translate("matplotlib_animation", "Reset"))
-        self.option_pushButton.setText(_translate("matplotlib_animation", "Optionen"))
-from canvaswidget import AnimationCanvasWidget
+        animation_widget.setWindowTitle(_translate("animation_widget", "Form"))
+        self.start_pushButton.setText(_translate("animation_widget", "Start"))
+        self.stop_pushButton.setText(_translate("animation_widget", "Stop"))
+        self.reset_pushButton.setText(_translate("animation_widget", "Reset"))
+        self.option_pushButton.setText(_translate("animation_widget", "Optionen"))
+from canvas import CanvasWidget

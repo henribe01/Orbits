@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>matplotlib_animation</class>
- <widget class="QWidget" name="matplotlib_animation">
+ <class>animation_widget</class>
+ <widget class="QWidget" name="animation_widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="AnimationCanvasWidget" name="canvas_widget" native="true">
+    <widget class="CanvasWidget" name="canvas_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -73,9 +73,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AnimationCanvasWidget</class>
+   <class>CanvasWidget</class>
    <extends>QWidget</extends>
-   <header>canvaswidget</header>
+   <header>canvas</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

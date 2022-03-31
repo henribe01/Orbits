@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'matplotlib_options.ui'
+# Form implementation generated from reading ui file 'options_widget.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,13 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_matplot_options(object):
-    def setupUi(self, matplot_options):
-        matplot_options.setObjectName("matplot_options")
-        matplot_options.resize(1185, 636)
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(matplot_options)
+class Ui_options_widget(object):
+    def setupUi(self, options_widget):
+        options_widget.setObjectName("options_widget")
+        options_widget.resize(1158, 636)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(options_widget)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.canvas_widget = OptionCanvasWidget(matplot_options)
+        self.canvas_widget = CanvasWidget(options_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -27,7 +27,7 @@ class Ui_matplot_options(object):
         self.horizontalLayout_2.addWidget(self.canvas_widget)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.groupBox = QtWidgets.QGroupBox(matplot_options)
+        self.groupBox = QtWidgets.QGroupBox(options_widget)
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -79,24 +79,28 @@ class Ui_matplot_options(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
-        self.save_pushButton = QtWidgets.QPushButton(matplot_options)
+        self.exit_pushButton = QtWidgets.QPushButton(options_widget)
+        self.exit_pushButton.setObjectName("exit_pushButton")
+        self.horizontalLayout.addWidget(self.exit_pushButton)
+        self.save_pushButton = QtWidgets.QPushButton(options_widget)
         self.save_pushButton.setObjectName("save_pushButton")
         self.horizontalLayout.addWidget(self.save_pushButton)
-        self.reset_pushButton = QtWidgets.QPushButton(matplot_options)
+        self.reset_pushButton = QtWidgets.QPushButton(options_widget)
         self.reset_pushButton.setObjectName("reset_pushButton")
         self.horizontalLayout.addWidget(self.reset_pushButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.horizontalLayout_2.addLayout(self.verticalLayout_2)
 
-        self.retranslateUi(matplot_options)
-        QtCore.QMetaObject.connectSlotsByName(matplot_options)
+        self.retranslateUi(options_widget)
+        QtCore.QMetaObject.connectSlotsByName(options_widget)
 
-    def retranslateUi(self, matplot_options):
+    def retranslateUi(self, options_widget):
         _translate = QtCore.QCoreApplication.translate
-        matplot_options.setWindowTitle(_translate("matplot_options", "Form"))
-        self.groupBox.setTitle(_translate("matplot_options", "Optionen"))
-        self.velx_label.setText(_translate("matplot_options", "<html><head/><body><p>Geschwindigkeit <br>in x-Richtung</p></body></html>"))
-        self.vely_label.setText(_translate("matplot_options", "<html><head/><body><p>Geschwindigkeit <br>in y-Richtung</p></body></html>"))
-        self.save_pushButton.setText(_translate("matplot_options", "Save"))
-        self.reset_pushButton.setText(_translate("matplot_options", "Reset"))
-from canvaswidget import OptionCanvasWidget
+        options_widget.setWindowTitle(_translate("options_widget", "Form"))
+        self.groupBox.setTitle(_translate("options_widget", "Optionen"))
+        self.velx_label.setText(_translate("options_widget", "<html><head/><body><p>Geschwindigkeit <br>in x-Richtung</p></body></html>"))
+        self.vely_label.setText(_translate("options_widget", "<html><head/><body><p>Geschwindigkeit <br>in y-Richtung</p></body></html>"))
+        self.exit_pushButton.setText(_translate("options_widget", "Exit"))
+        self.save_pushButton.setText(_translate("options_widget", "Save"))
+        self.reset_pushButton.setText(_translate("options_widget", "Reset"))
+from canvas import CanvasWidget
