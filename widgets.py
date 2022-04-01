@@ -13,6 +13,9 @@ class AnimationWidget(QWidget, Ui_animation_widget):
     def connect_events(self):
         self.option_pushButton.clicked.connect(
             self.parentWidget().show_options_widget)
+        self.start_pushButton.clicked.connect(
+            self.canvas_widget.start_animation)
+        self.stop_pushButton.clicked.connect(self.canvas_widget.stop_animation)
 
 
 class OptionsWidget(QWidget, Ui_options_widget):

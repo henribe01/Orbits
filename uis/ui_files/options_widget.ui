@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="CanvasWidget" name="canvas_widget" native="true">
+    <widget class="OptionCanvasWidget" name="canvas_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -189,7 +189,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CanvasWidget</class>
+   <class>OptionCanvasWidget</class>
    <extends>QWidget</extends>
    <header>canvas</header>
    <container>1</container>

@@ -7,6 +7,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure
 
+from lines import DraggablePlanetLines
 from planets import Planet
 
 
@@ -33,12 +34,29 @@ class CanvasWidget(Canvas, QWidget):
 class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
     def __init__(self, parent):
         super(AnimationCanvasWidget, self).__init__(parent)
+        self.running = False
         ani = FuncAnimation.__init__(self, self.figure, self._update_ani,
                                      interval=10, blit=True)
         self.all_lines = Planet.plot_planets(self.axes)
 
     def _update_ani(self, frame) -> Iterable[plt.Artist]:
-        for planet_line in self.all_lines:
-            planet_line.plot()
+        if self.running:
+            for planet_line in self.all_lines:
+                planet_line.plot()
         return [line for planet_line in self.all_lines for line in
                 planet_line.get_lines()]
+
+    def start_animation(self):
+        self.running = True
+        self.resume()
+
+    def stop_animation(self):
+        self.running = False
+        self.pause()
+
+
+class OptionCanvasWidget(CanvasWidget):
+    def __init__(self, parent):
+        super(OptionCanvasWidget, self).__init__(parent)
+        self.all_lines = Planet.plot_planets(self.axes, DraggablePlanetLines)
+        print(self.all_lines)

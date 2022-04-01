@@ -1,10 +1,11 @@
-from typing import Dict, List, Tuple
+from typing import List
+from typing import Type
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 from config import TIME, GRAV_CONST
-from lines import PlanetLine
+from lines import PlanetLines, DraggablePlanetLines
 
 
 class Planet:
@@ -50,12 +51,15 @@ class Planet:
         return cls.all_planets[name]
 
     @classmethod
-    def plot_planets(cls, axes: plt.Axes, names_list: List = None):
+    def plot_planets(cls, axes: plt.Axes, line_class: Type[
+        PlanetLines] = PlanetLines,
+                     names_list: List = None):
         """Plots the given Planets onto the given Axes"""
         all_lines = list()
-        print(cls.all_planets)
         for name, planet in cls.all_planets.items():
             if names_list is None or name in names_list:
-                planet_line = PlanetLine(axes, planet)
-                all_lines.append(planet_line)
+                planet_lines = line_class(axes, planet)
+                if line_class == DraggablePlanetLines:
+                    planet_lines.connect()
+                all_lines.append(planet_lines)
         return all_lines

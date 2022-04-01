@@ -17,7 +17,7 @@ class Ui_options_widget(object):
         options_widget.resize(1158, 636)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(options_widget)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.canvas_widget = CanvasWidget(options_widget)
+        self.canvas_widget = OptionCanvasWidget(options_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -103,4 +103,4 @@ class Ui_options_widget(object):
         self.exit_pushButton.setText(_translate("options_widget", "Exit"))
         self.save_pushButton.setText(_translate("options_widget", "Save"))
         self.reset_pushButton.setText(_translate("options_widget", "Reset"))
-from canvas import CanvasWidget
+from canvas import OptionCanvasWidget
