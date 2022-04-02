@@ -2,6 +2,8 @@ from typing import Tuple
 
 import matplotlib.pyplot as plt
 
+import planets
+
 
 class PlanetLines:
     """Class with Lines that plot the Planet itself and the trailing line"""
@@ -13,15 +15,15 @@ class PlanetLines:
         self.all_x_pos, self.all_y_pos = [], []
 
         self.planet_dot, = self.axes.plot(*self.planet.pos,
-                                          'ro')  # type:plt.Line2D
-        self.trail_line, = self.axes.plot(*self.planet.pos)  # type:plt.Line2D
+                                          'ro', zorder=10)  # type:plt.Line2D
+        self.trail_line, = self.axes.plot(*self.planet.pos, zorder=1)  # type:plt.Line2D
 
     def add_x_y_data(self, data: Tuple):
         """Adds data to the last positions of the planet"""
         self.all_x_pos.append(data[0])
         self.all_y_pos.append(data[1])
 
-    def plot(self):
+    def update(self):
         """Updates the planets position and plots the new position"""
         self.planet.update_pos()
         self.add_x_y_data(self.planet.pos)
@@ -37,6 +39,9 @@ class DraggablePlanetLines(PlanetLines):
     def __init__(self, axes: plt.Axes, planet):
         super(DraggablePlanetLines, self).__init__(axes, planet)
         self.press = None
+        self.connect()
+        self.trail_planet = planets.TrailPlanet(
+            *self.planet.get_attributes())  # type: planets.Planet
 
     def connect(self):
         """Connect to all the events we need."""
@@ -66,9 +71,26 @@ class DraggablePlanetLines(PlanetLines):
         self.planet_dot.set_xdata(x0 + dx)
         self.planet_dot.set_ydata(y0 + dy)
 
+        self.trail_planet.set_pos(*self.planet_dot.get_xydata())
+        self.planet_dot.figure.canvas.clear()
+        self.planet_dot.figure.canvas.calc_path()
         self.planet_dot.figure.canvas.draw()
 
     def on_release(self, event):
         """Clear button press information"""
         self.press = None
         self.planet_dot.figure.canvas.draw()
+
+    def update(self):
+        self.trail_planet.update_pos()
+        self.add_x_y_data(self.trail_planet.pos)
+        self.trail_line.set_data(self.all_x_pos, self.all_y_pos)
+
+    def clear(self):
+        self.all_x_pos, self.all_y_pos = [], []
+        self.trail_line.set_data(*self.planet_dot.get_xydata())
+        vel = self.planet.vel
+        mass = self.planet.mass
+        self.trail_planet = planets.TrailPlanet(self.planet.name, mass,
+                                                *self.planet_dot.get_xydata(),
+                                                vel)  # type: planets.Planet

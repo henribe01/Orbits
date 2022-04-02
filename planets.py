@@ -1,11 +1,9 @@
 from typing import List
-from typing import Type
 
-import matplotlib.pyplot as plt
 import numpy as np
 
 from config import TIME, GRAV_CONST
-from lines import PlanetLines, DraggablePlanetLines
+from lines import DraggablePlanetLines
 
 
 class Planet:
@@ -35,6 +33,13 @@ class Planet:
                 total_force += force * direction_vector
         return total_force / self.mass
 
+    def get_attributes(self):
+        return self.name, self.mass, [*self.pos], [*self.vel]
+
+    def set_pos(self, data):
+        self.pos[0] = float(data[0])
+        self.pos[1] = float(data[1])
+
     @classmethod
     def init_planets(cls, planets):
         """
@@ -44,22 +49,47 @@ class Planet:
         :return: None
         """
         for name, planet_data in planets.items():
-            cls(name, *planet_data)
+            planet = cls(name, *planet_data)
 
     @classmethod
-    def get_planet(cls, name):
+    def __index__(cls, name):
         return cls.all_planets[name]
 
     @classmethod
-    def plot_planets(cls, axes: plt.Axes, line_class: Type[
-        PlanetLines] = PlanetLines,
-                     names_list: List = None):
-        """Plots the given Planets onto the given Axes"""
-        all_lines = list()
-        for name, planet in cls.all_planets.items():
-            if names_list is None or name in names_list:
-                planet_lines = line_class(axes, planet)
-                if line_class == DraggablePlanetLines:
-                    planet_lines.connect()
-                all_lines.append(planet_lines)
-        return all_lines
+    def get_all_planets(cls):
+        return cls.all_planets
+
+    @classmethod
+    def precalc_path(cls, lines: List[DraggablePlanetLines]):
+        """Calculates the first 500 Steps of each planet"""
+        for _ in range(500):
+            for line in lines:
+                line: DraggablePlanetLines
+                planet = line.planet
+                planet.update_pos()
+                line.add_x_y_data(tuple(planet.pos))
+
+
+class TrailPlanet(Planet):
+    all_planets = dict()
+
+    def __init__(self, name, mass, pos: tuple, vel: tuple):
+        super(TrailPlanet, self).__init__(name, mass, pos, vel)
+        TrailPlanet.all_planets[name] = self
+
+    def update_pos(self):
+        self.pos += self.vel * TIME
+        self.vel += self.calc_acceleration() * TIME
+
+    def calc_acceleration(self):
+        """Calculates acceleration for planet"""
+        total_force = np.array([0, 0], dtype=np.float64)
+        for other_planet in TrailPlanet.all_planets.values():
+            if other_planet != self:
+                vector_planets = self.pos - other_planet.pos
+                norm_vector = np.linalg.norm(vector_planets)
+                force = -(
+                        GRAV_CONST * self.mass * other_planet.mass) / norm_vector ** 2
+                direction_vector = vector_planets / norm_vector
+                total_force += force * direction_vector
+        return total_force / self.mass
