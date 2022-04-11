@@ -21,9 +21,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def show_animation_widget(self):
         self.stackedWidget.setCurrentWidget(self.animation_widget)
+        self.animation_widget.canvas_widget.reload_lines()
 
     def show_options_widget(self):
         self.stackedWidget.setCurrentWidget(self.options_widget)
+        self.options_widget.canvas_widget.reload_lines()
 
 
 def except_hook(cls, exception, traceback):
@@ -36,6 +38,7 @@ all_planets = {'Earth': [5.972 * 10 ** 24, [0, 0], [0, 0]],
 
 if __name__ == '__main__':
     planets.Planet.init_planets(all_planets)
+    planets.Planet.save_planet_state()
     app = QApplication(sys.argv)
     sys.excepthook = except_hook
     main_window = MainWindow()

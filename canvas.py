@@ -32,10 +32,15 @@ class CanvasWidget(Canvas, QWidget):
 
     def plot_planets(self, line_class, planet_dict=Planet.get_all_planets()):
         all_lines = list()
-        for name, planet in planet_dict.items():
-            planet_lines = line_class(self.axes, planet)
+        for name in planet_dict.keys():
+            planet_lines = line_class(self.axes, name)
             all_lines.append(planet_lines)
         return all_lines
+
+    def clear(self):
+        for line in self.all_lines:
+            line: PlanetLines
+            line.clear()
 
 
 class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
@@ -61,6 +66,11 @@ class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
         self.running = False
         self.pause()
 
+    def reload_lines(self):
+        self.clear()
+        self.all_lines = self.plot_planets(PlanetLines)
+        self.draw()
+
 
 class OptionCanvasWidget(CanvasWidget):
     def __init__(self, parent):
@@ -74,7 +84,21 @@ class OptionCanvasWidget(CanvasWidget):
                 line: DraggablePlanetLines
                 line.update()
 
-    def clear(self):
+    def reload_lines(self):
+        """Loads the current state of the planets into the OptionsCanvas"""
         for line in self.all_lines:
             line: DraggablePlanetLines
-            line.clear()
+            self.axes.lines.remove(line.trail_line)
+            self.axes.lines.remove(line.planet_dot)
+        self.all_lines = self.plot_planets(DraggablePlanetLines)
+        self.draw()
+        self.calc_path()
+
+    def save(self):
+        all_planets = dict()
+        for line in self.all_lines:
+            line: DraggablePlanetLines
+            name, planet = line.save()
+            all_planets[name] = planet
+        Planet.override_planets(all_planets)
+        Planet.save_planet_state()

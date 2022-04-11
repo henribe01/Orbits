@@ -1,3 +1,4 @@
+import copy
 from typing import Tuple
 
 import matplotlib.pyplot as plt
@@ -8,8 +9,8 @@ import planets
 class PlanetLines:
     """Class with Lines that plot the Planet itself and the trailing line"""
 
-    def __init__(self, axes: plt.Axes, planet):
-        self.planet = planet
+    def __init__(self, axes: plt.Axes, name):
+        self.planet = planets.Planet.get_planet(name)
         self.axes = axes
 
         self.all_x_pos, self.all_y_pos = [], []
@@ -34,11 +35,16 @@ class PlanetLines:
         """Returns both line objects"""
         return self.planet_dot, self.trail_line
 
+    def clear(self):
+        self.axes.lines.remove(self.planet_dot)
+        self.axes.lines.remove(self.trail_line)
+
 
 class DraggablePlanetLines(PlanetLines):
     def __init__(self, axes: plt.Axes, planet):
         super(DraggablePlanetLines, self).__init__(axes, planet)
         self.press = None
+        self.test_planet = copy.deepcopy(self.planet) #type: planets.Planet
         self.connect()
         self.trail_planet = planets.TrailPlanet(
             *self.planet.get_attributes())  # type: planets.Planet
@@ -79,6 +85,7 @@ class DraggablePlanetLines(PlanetLines):
     def on_release(self, event):
         """Clear button press information"""
         self.press = None
+        self.test_planet.set_pos(*self.planet_dot.get_xydata())
         self.planet_dot.figure.canvas.draw()
 
     def update(self):
@@ -94,3 +101,6 @@ class DraggablePlanetLines(PlanetLines):
         self.trail_planet = planets.TrailPlanet(self.planet.name, mass,
                                                 *self.planet_dot.get_xydata(),
                                                 vel)  # type: planets.Planet
+
+    def save(self):
+        return self.test_planet.name, self.test_planet
