@@ -48,6 +48,7 @@ class DraggablePlanetLines(PlanetLines):
         self.connect()
         self.trail_planet = planets.TrailPlanet(
             *self.planet.get_attributes())  # type: planets.Planet
+        self.canvas = self.planet_dot.figure.canvas
 
     def connect(self):
         """Connect to all the events we need."""
@@ -66,6 +67,7 @@ class DraggablePlanetLines(PlanetLines):
         if not contains:
             return
         self.press = *self.planet_dot.get_xydata(), (event.xdata, event.ydata)
+        self.canvas.parentWidget().set_selected_line(self)
 
     def on_motion(self, event):
         """Move the planet if the mouse is over us."""
@@ -78,9 +80,9 @@ class DraggablePlanetLines(PlanetLines):
         self.planet_dot.set_ydata(y0 + dy)
 
         self.trail_planet.set_pos(*self.planet_dot.get_xydata())
-        self.planet_dot.figure.canvas.clear()
-        self.planet_dot.figure.canvas.calc_path()
-        self.planet_dot.figure.canvas.draw()
+        self.canvas.clear()
+        self.canvas.calc_path()
+        self.canvas.draw()
 
     def on_release(self, event):
         """Clear button press information"""
@@ -96,9 +98,9 @@ class DraggablePlanetLines(PlanetLines):
     def clear(self):
         self.all_x_pos, self.all_y_pos = [], []
         self.trail_line.set_data(*self.planet_dot.get_xydata())
-        vel = self.planet.vel
-        mass = self.planet.mass
-        self.trail_planet = planets.TrailPlanet(self.planet.name, mass,
+        vel = self.test_planet.vel
+        mass = self.test_planet.mass
+        self.trail_planet = planets.TrailPlanet(self.test_planet.name, mass,
                                                 *self.planet_dot.get_xydata(),
                                                 vel)  # type: planets.Planet
 

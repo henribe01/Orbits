@@ -8,6 +8,7 @@ from config import TIME, GRAV_CONST
 class Planet:
     all_planets = dict()
     save_state_planets = dict()
+
     def __init__(self, name, mass, pos: tuple, vel: tuple):
         self.name = name
         self.mass = mass
@@ -37,6 +38,10 @@ class Planet:
     def set_pos(self, data):
         self.pos[0] = float(data[0])
         self.pos[1] = float(data[1])
+
+    def set_vel(self, data):
+        self.vel[0] = float(data[0])
+        self.vel[1] = float(data[1])
 
     @classmethod
     def init_planets(cls, planets):

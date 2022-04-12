@@ -91,8 +91,8 @@ class OptionCanvasWidget(CanvasWidget):
             self.axes.lines.remove(line.trail_line)
             self.axes.lines.remove(line.planet_dot)
         self.all_lines = self.plot_planets(DraggablePlanetLines)
-        self.draw()
         self.calc_path()
+        self.draw()
 
     def save(self):
         all_planets = dict()
