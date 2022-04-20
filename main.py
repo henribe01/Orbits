@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 import planets
 from uis.python_files.mainwindow import Ui_MainWindow
 from widgets import AnimationWidget, OptionsWidget
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):

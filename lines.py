@@ -17,7 +17,8 @@ class PlanetLines:
 
         self.planet_dot, = self.axes.plot(*self.planet.pos,
                                           'ro', zorder=10)  # type:plt.Line2D
-        self.trail_line, = self.axes.plot(*self.planet.pos, zorder=1)  # type:plt.Line2D
+        self.trail_line, = self.axes.plot(*self.planet.pos,
+                                          zorder=1)  # type:plt.Line2D
 
     def add_x_y_data(self, data: Tuple):
         """Adds data to the last positions of the planet"""
@@ -44,7 +45,7 @@ class DraggablePlanetLines(PlanetLines):
     def __init__(self, axes: plt.Axes, planet):
         super(DraggablePlanetLines, self).__init__(axes, planet)
         self.press = None
-        self.test_planet = copy.deepcopy(self.planet) #type: planets.Planet
+        self.test_planet = copy.deepcopy(self.planet)  # type: planets.Planet
         self.connect()
         self.trail_planet = planets.TrailPlanet(
             *self.planet.get_attributes())  # type: planets.Planet

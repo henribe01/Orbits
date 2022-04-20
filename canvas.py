@@ -47,7 +47,7 @@ class AnimationCanvasWidget(CanvasWidget, FuncAnimation):
     def __init__(self, parent):
         super(AnimationCanvasWidget, self).__init__(parent)
         self.running = False
-        ani = FuncAnimation.__init__(self, self.figure, self._update_ani,
+        FuncAnimation.__init__(self, self.figure, self._update_ani,
                                      interval=10, blit=True)
         self.all_lines = self.plot_planets(PlanetLines)
 

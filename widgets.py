@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QWidget
+from matplotlib.backends.backend_qt import NavigationToolbar2QT
 
 import lines
 import planets
@@ -10,7 +11,10 @@ class AnimationWidget(QWidget, Ui_animation_widget):
     def __init__(self, parent: QWidget):
         super(AnimationWidget, self).__init__(parent)
         self.setupUi(self)
+        toolbar = NavigationToolbar2QT(self.canvas_widget, self)
+        self.toolbar_layout.addWidget(toolbar)
         self.connect_events()
+
 
     def connect_events(self):
         self.option_pushButton.clicked.connect(
@@ -30,6 +34,8 @@ class OptionsWidget(QWidget, Ui_options_widget):
     def __init__(self, parent: QWidget):
         super(OptionsWidget, self).__init__(parent)
         self.setupUi(self)
+        toolbar = NavigationToolbar2QT(self.canvas_widget, self)
+        self.toolbar_layout.addWidget(toolbar)
         self.connect_events()
         self.selected_line = self.canvas_widget.all_lines[
             0]  # type: lines.DraggablePlanetLines
