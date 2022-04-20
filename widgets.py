@@ -42,6 +42,7 @@ class OptionsWidget(QWidget, Ui_options_widget):
         self.reset_pushButton.clicked.connect(self.reset_canvas)
         self.velx_lineEdit.textEdited.connect(self.update_LineEdit)
         self.vely_lineEdit.textEdited.connect(self.update_LineEdit)
+        self.mass_lineEdit.textEdited.connect(self.update_LineEdit)
 
     def save(self):
         self.canvas_widget.save()
@@ -57,13 +58,15 @@ class OptionsWidget(QWidget, Ui_options_widget):
         self.set_LineEdit()
 
     def set_LineEdit(self):
+        self.name_lineEdit.setText(str(self.selected_line.planet.name))
         self.velx_lineEdit.setText(str(round(self.selected_line.planet.vel[0], 5)))
         self.vely_lineEdit.setText(str(round(self.selected_line.planet.vel[1], 5)))
+        self.mass_lineEdit.setText(f'{self.selected_line.planet.mass:.2e}')
 
     def update_LineEdit(self):
-        print(self.velx_lineEdit.text())
         self.selected_line.test_planet.set_vel(
             [self.velx_lineEdit.text(), self.vely_lineEdit.text()])
+        self.selected_line.test_planet.set_mass(self.mass_lineEdit.text())
         self.canvas_widget.clear()
         self.canvas_widget.calc_path()
         self.canvas_widget.draw()

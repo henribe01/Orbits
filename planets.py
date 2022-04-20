@@ -43,6 +43,9 @@ class Planet:
         self.vel[0] = float(data[0])
         self.vel[1] = float(data[1])
 
+    def set_mass(self, data):
+        self.mass = float(data)
+
     @classmethod
     def init_planets(cls, planets):
         """
