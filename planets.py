@@ -59,6 +59,12 @@ class Planet:
             cls.all_planets[name] = planet
 
     @classmethod
+    def create_new_planet(cls, name, mass, pos: tuple, vel: tuple):
+        planet = cls(name, mass, pos, vel)
+        cls.all_planets[name] = planet
+
+
+    @classmethod
     def get_planet(cls, name):
         return cls.all_planets[name]
 
@@ -77,6 +83,10 @@ class Planet:
     @classmethod
     def reset_planets(cls):
         cls.all_planets = copy.deepcopy(cls.save_state_planets)
+
+    @classmethod
+    def delete_planet(cls, name):
+        del cls.all_planets[name]
 
 
 class TrailPlanet(Planet):
@@ -102,3 +112,7 @@ class TrailPlanet(Planet):
                 direction_vector = vector_planets / norm_vector
                 total_force += force * direction_vector
         return total_force / self.mass
+
+    @classmethod
+    def override_planets(cls, planet_dct):
+        cls.all_trail_planets = planet_dct

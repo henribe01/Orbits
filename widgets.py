@@ -1,3 +1,6 @@
+import random
+from random import randint
+
 from PyQt5.QtWidgets import QWidget
 from matplotlib.backends.backend_qt import NavigationToolbar2QT
 
@@ -14,7 +17,6 @@ class AnimationWidget(QWidget, Ui_animation_widget):
         toolbar = NavigationToolbar2QT(self.canvas_widget, self)
         self.toolbar_layout.addWidget(toolbar)
         self.connect_events()
-
 
     def connect_events(self):
         self.option_pushButton.clicked.connect(
@@ -49,6 +51,7 @@ class OptionsWidget(QWidget, Ui_options_widget):
         self.velx_lineEdit.textEdited.connect(self.update_LineEdit)
         self.vely_lineEdit.textEdited.connect(self.update_LineEdit)
         self.mass_lineEdit.textEdited.connect(self.update_LineEdit)
+        self.add_pushButton.clicked.connect(self.add_planet)
 
     def save(self):
         self.canvas_widget.save()
@@ -64,15 +67,26 @@ class OptionsWidget(QWidget, Ui_options_widget):
         self.set_LineEdit()
 
     def set_LineEdit(self):
-        self.name_lineEdit.setText(str(self.selected_line.planet.name))
-        self.velx_lineEdit.setText(str(round(self.selected_line.planet.vel[0], 5)))
-        self.vely_lineEdit.setText(str(round(self.selected_line.planet.vel[1], 5)))
-        self.mass_lineEdit.setText(f'{self.selected_line.planet.mass:.2e}')
+        self.name_lineEdit.setText(str(self.selected_line.test_planet.name))
+        self.velx_lineEdit.setText(
+            str(round(self.selected_line.test_planet.vel[0], 5)))
+        self.vely_lineEdit.setText(
+            str(round(self.selected_line.test_planet.vel[1], 5)))
+        self.mass_lineEdit.setText(f'{self.selected_line.test_planet.mass:.2e}')
 
     def update_LineEdit(self):
         self.selected_line.test_planet.set_vel(
             [self.velx_lineEdit.text(), self.vely_lineEdit.text()])
         self.selected_line.test_planet.set_mass(self.mass_lineEdit.text())
+        self.canvas_widget.clear()
+        self.canvas_widget.calc_path()
+        self.canvas_widget.draw()
+
+    def add_planet(self):
+        planet_count = len(planets.Planet.get_all_planets())
+        mass = random.uniform(0.01, 9.99) * 10**random.randint(15, 25)
+        planets.Planet.create_new_planet(f'Planet_{planet_count}', mass, (0, 0), (0, 0))
+        self.canvas_widget.create_new_line(f'Planet_{planet_count}')
         self.canvas_widget.clear()
         self.canvas_widget.calc_path()
         self.canvas_widget.draw()

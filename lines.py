@@ -42,8 +42,8 @@ class PlanetLines:
 
 
 class DraggablePlanetLines(PlanetLines):
-    def __init__(self, axes: plt.Axes, planet):
-        super(DraggablePlanetLines, self).__init__(axes, planet)
+    def __init__(self, axes: plt.Axes, name):
+        super(DraggablePlanetLines, self).__init__(axes, name)
         self.press = None
         self.test_planet = copy.deepcopy(self.planet)  # type: planets.Planet
         self.connect()

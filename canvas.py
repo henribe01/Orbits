@@ -7,6 +7,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure
 
+import planets
 from lines import PlanetLines, DraggablePlanetLines
 from planets import Planet
 
@@ -102,3 +103,7 @@ class OptionCanvasWidget(CanvasWidget):
             all_planets[name] = planet
         Planet.override_planets(all_planets)
         Planet.save_planet_state()
+
+    def create_new_line(self, planet):
+        line = DraggablePlanetLines(self.axes, planet)
+        self.all_lines.append(line)
