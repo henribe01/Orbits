@@ -1,5 +1,4 @@
 import random
-from random import randint
 
 from PyQt5.QtWidgets import QWidget
 from matplotlib.backends.backend_qt import NavigationToolbar2QT
@@ -52,6 +51,7 @@ class OptionsWidget(QWidget, Ui_options_widget):
         self.vely_lineEdit.textEdited.connect(self.update_LineEdit)
         self.mass_lineEdit.textEdited.connect(self.update_LineEdit)
         self.add_pushButton.clicked.connect(self.add_planet)
+        self.remove_pushButton.clicked.connect(self.remove_planet)
 
     def save(self):
         self.canvas_widget.save()
@@ -72,7 +72,8 @@ class OptionsWidget(QWidget, Ui_options_widget):
             str(round(self.selected_line.test_planet.vel[0], 5)))
         self.vely_lineEdit.setText(
             str(round(self.selected_line.test_planet.vel[1], 5)))
-        self.mass_lineEdit.setText(f'{self.selected_line.test_planet.mass:.2e}')
+        self.mass_lineEdit.setText(
+            f'{self.selected_line.test_planet.mass:.2e}')
 
     def update_LineEdit(self):
         self.selected_line.test_planet.set_vel(
@@ -84,9 +85,21 @@ class OptionsWidget(QWidget, Ui_options_widget):
 
     def add_planet(self):
         planet_count = len(planets.Planet.get_all_planets())
-        mass = random.uniform(0.01, 9.99) * 10**random.randint(15, 25)
-        planets.Planet.create_new_planet(f'Planet_{planet_count}', mass, (0, 0), (0, 0))
+        mass = random.uniform(0.01, 9.99) * 10 ** random.randint(15, 25)
+        pos = (random.randint(-1000000000, 1000000000),
+               random.randint(-1000000000, 1000000000))
+        print(pos)
+        planets.Planet.create_new_planet(f'Planet_{planet_count}', mass, pos,
+                                         (0, 0))
         self.canvas_widget.create_new_line(f'Planet_{planet_count}')
+        self.canvas_widget.clear()
+        self.canvas_widget.calc_path()
+        self.canvas_widget.draw()
+
+    def remove_planet(self):
+        planets.Planet.remove_planet(self.selected_line.planet.name)
+        self.canvas_widget.remove_line(self.selected_line)
+        self.set_selected_line(self.canvas_widget.all_lines[0])
         self.canvas_widget.clear()
         self.canvas_widget.calc_path()
         self.canvas_widget.draw()

@@ -107,3 +107,9 @@ class OptionCanvasWidget(CanvasWidget):
     def create_new_line(self, planet):
         line = DraggablePlanetLines(self.axes, planet)
         self.all_lines.append(line)
+
+    def remove_line(self, line):
+        index = self.all_lines.index(line)
+        line.remove()
+        del self.all_lines[index]
+

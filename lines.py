@@ -105,5 +105,9 @@ class DraggablePlanetLines(PlanetLines):
                                                 *self.planet_dot.get_xydata(),
                                                 vel)  # type: planets.Planet
 
+    def remove(self):
+        self.axes.lines.remove(self.planet_dot)
+        self.axes.lines.remove(self.trail_line)
+
     def save(self):
         return self.test_planet.name, self.test_planet

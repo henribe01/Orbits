@@ -63,6 +63,11 @@ class Planet:
         planet = cls(name, mass, pos, vel)
         cls.all_planets[name] = planet
 
+    @classmethod
+    def remove_planet(cls, name):
+        del cls.all_planets[name]
+        del TrailPlanet.all_trail_planets[name]
+
 
     @classmethod
     def get_planet(cls, name):
